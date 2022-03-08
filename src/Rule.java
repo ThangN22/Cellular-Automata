@@ -37,11 +37,12 @@ public abstract class Rule {
 	 * abstract classes do not have a method body, but rather has a semicolon
 	 */
 	public static boolean[] getNeighborhoodByRadius(int idx, int radius, Generation gen) {
-		int booleanSize = 1 + (radius * 2);
-		boolean[] cellStates = new boolean[booleanSize];
-		int genIdx = Math.floorMod(idx - radius, gen.size());
-		for (int index = 0; index < cellStates.length; ++index) {
-			
+		int booleanSize = 1 + (radius * 2); 
+		boolean[] cellStates = new boolean[booleanSize];// Create a boolean array with the size of the radius
+		
+		for (int index = 0; index < cellStates.length; ++index) { // Fill in the array with the states of the param.
+			int genIdx = index + (idx - radius);
+			genIdx = Math.floorMod(genIdx, gen.size());
 			cellStates[index] = gen.getState(genIdx);
 			++genIdx;
 		}
