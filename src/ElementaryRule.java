@@ -71,51 +71,7 @@ public class ElementaryRule extends Rule {
 	}
 	
 	public boolean[] getNeighborhood(int idx, Generation gen) {
-		boolean[] booleanGen = new boolean[3];
-		if (gen.size() == 2) { // checks if the Generation parameter is less than 3
-			if (idx == 0) {
-				booleanGen[0] = gen.getState(idx);
-				booleanGen[1] = gen.getState(idx);
-				booleanGen[2] = gen.getState(idx + 1);
-				return booleanGen;
-			} 
-			else if (idx == 1) {
-				booleanGen[0] = gen.getState(idx - 1);
-				booleanGen[1] = gen.getState(idx);
-				booleanGen[2] = gen.getState(idx);
-				return booleanGen;
-			}
-			
-		}
-		if (gen.size() == 1) { // checks if the Generation parameter is less than 2
-			booleanGen[0] = gen.getState(idx);
-			booleanGen[1] = gen.getState(idx);
-			booleanGen[2] = gen.getState(idx);
-			return booleanGen;
-		}
-
-		// Circular condition
-		if (idx == 0) { // Accounts for the index being in the beginning of the gen array
-			booleanGen[0] = gen.getState(gen.size() - 1);
-			booleanGen[1] = gen.getState(idx);
-			booleanGen[2] = gen.getState(idx + 1);
-			return booleanGen;
-		}
-
-		else if (idx == gen.size() - 1) { // Accounts for the index being in the end of the gen array
-			booleanGen[0] = gen.getState(idx - 1);
-			booleanGen[1] = gen.getState(idx);
-			booleanGen[2] = gen.getState(0);
-			return booleanGen;
-		}
-
-		else { // Accounts for ever other situation where the index is somewhere in the center
-				// of the gen array
-			booleanGen[0] = gen.getState(idx - 1);
-			booleanGen[1] = gen.getState(idx);
-			booleanGen[2] = gen.getState(idx + 1);
-			return booleanGen;
-		}
+		return super.getNeighborhoodByRadius(idx, 1, gen);
 	}
 	
 	public String ruleTableString(char falseSymbol, char trueSymbol) {
