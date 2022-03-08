@@ -1,6 +1,7 @@
+import java.util.StringJoiner;
 
 public class ElementaryRule extends Rule {
-
+	
 	protected ElementaryRule(int ruleNum) throws RuleNumException {
 		super(ruleNum);
 		
@@ -12,6 +13,7 @@ public class ElementaryRule extends Rule {
 		
 	}
 	
+	@Override
 	public boolean evolve(boolean[] neighborhood) {
 		boolean[] binaryArray1 = new boolean[8];
 
@@ -70,12 +72,44 @@ public class ElementaryRule extends Rule {
 		return false;
 	}
 	
+	@Override
 	public boolean[] getNeighborhood(int idx, Generation gen) {
 		return super.getNeighborhoodByRadius(idx, 1, gen);
 	}
 	
+	@Override
 	public String ruleTableString(char falseSymbol, char trueSymbol) {
-		String returnStub = "";
+		
+		boolean[] genStates = {true, true, true, true, true, false, true, false, true, true, false, false, false, true, true, false, true, false, false, false, true, false, false, false};
+		Generation gen = new Generation(genStates);
+		StringJoiner joiner = new StringJoiner(" ", "", "");
+		/*
+		 * Create the first line
+		 */
+		for (int idx = 1; idx < genStates.length - 1; idx = idx + 3) {
+			boolean[] temp = getNeighborhood(idx, gen); // helper method
+			Generation tempGen = new Generation(temp); // generation class invoke
+			String tempString = tempGen.getStates(falseSymbol, trueSymbol); // conform to the format of trueSymbol and falseSymbol
+			joiner.add(tempString);
+		}
+		/*
+		 * Create the second line
+		 */
+		String binaryString = Integer.toBinaryString(getRuleNum()); // Receives integer and converts to String
+		String binaryRuleNum = String.format("%8s", binaryString).replace(' ', '0'); // adds in the zeros where they should be
+		
+		StringJoiner joiner2 = new StringJoiner("   ", " ", " ");
+		for (int idx = 0; idx < binaryRuleNum.length(); ++idx)
+		{
+			String comp = String.valueOf(binaryRuleNum.charAt(idx));
+			if (comp.equals(String.valueOf(0))) { // The following else and else if convert the String of the RuleNum in Binary Format to conform with the trueSymbol and falseSymbol
+				joiner2.add(String.valueOf(falseSymbol));
+			}
+			else if (comp.equals(String.valueOf(1))) {
+				joiner2.add(String.valueOf(trueSymbol));
+			}
+		}
+		String returnStub = joiner.toString() + System.lineSeparator() +joiner2.toString();
 		return returnStub;
 		
 	}
