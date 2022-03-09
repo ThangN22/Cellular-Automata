@@ -3,7 +3,7 @@ public abstract class Rule {
 	private int ruleNum;
 	// Add variables as needed
 
-	protected Rule(int ruleNum) throws RuleNumException {
+	protected Rule(int ruleNum) {
 		this.ruleNum = ruleNum;
 	}
 
