@@ -1,4 +1,4 @@
-
+import java.util.StringJoiner;
 public class TotalisticRule extends Rule {
 	protected TotalisticRule(int ruleNum) throws RuleNumException {
 		super(ruleNum);
@@ -18,7 +18,32 @@ public class TotalisticRule extends Rule {
 	
 	@Override
 	public String ruleTableString(char falseSymbol, char trueSymbol) {
-		String baka = "";
+		int totalisticSet = 5;
+		StringJoiner joiner = new StringJoiner(" ", "", "");
+		for (int idx = totalisticSet; idx >= 0; --idx) {
+			joiner.add(String.valueOf(idx));
+		}
+		
+		
+		String binaryString = Integer.toBinaryString(getRuleNum()); // Receives integer and converts to String
+		binaryString = String.format("%6s", binaryString).replace(' ', '0'); // adds in the zeros where they should be
+		
+		String binaryStringSymbol = "";
+		for(int idx  = 0; idx < binaryString.length(); ++idx) {
+			String compareString = String.valueOf(binaryString.charAt(idx));
+			if (compareString.equals(String.valueOf(1))) {
+				binaryStringSymbol += trueSymbol;
+			}
+			else {
+				binaryStringSymbol += falseSymbol;
+			}
+		}
+		
+		StringJoiner secondJoiner = new StringJoiner(" ", "", "");
+		for (int idx = 0; idx < binaryStringSymbol.length(); ++idx) {
+			secondJoiner.add(String.valueOf(binaryStringSymbol.charAt(idx)));
+		}
+		String baka = joiner.toString() + System.lineSeparator() + secondJoiner.toString();
 		return baka;
 	}
 
