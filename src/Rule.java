@@ -1,4 +1,8 @@
-
+/**
+ * The abstract rule represents any rule that governs the evolution of a 1D, two-state CA.
+ * @author Thang Nguyen
+ *
+ */
 public abstract class Rule {
 	private int ruleNum;
 	// Add variables as needed
@@ -11,12 +15,26 @@ public abstract class Rule {
 
 		return ruleNum;
 	}
-
+	/**
+	 * Return the cell states in the neighborhood of the cell with the given index
+	 * @param idx
+	 * @param gen the generation to get the neighborhood from 
+	 * @return neighborhood
+	 */
 	public abstract boolean[] getNeighborhood(int idx, Generation gen);
 	
-
+	/**
+	 * Return the next state of a cell in a neighborhood with the given states.
+	 * @param neighborhood
+	 * @return boolean state of the cell
+	 */
 	public abstract boolean evolve(boolean[] neighborhood);
 
+	/**
+	 * Return the next generation with the given generation
+	 * @param gen
+	 * @return the evolved generation
+	 */
 	public Generation evolve(Generation gen) {
 		String evolvedGenString = "";
 		for (int idx = 0; idx < gen.size(); ++idx) {
@@ -30,11 +48,18 @@ public abstract class Rule {
 		return evolved; 
 	}
 	
+	/*
+	 * Return the table that depicts the rule using the given characters to represent false and true.
+	 */
 	public abstract String ruleTableString(char falseSymbol, char trueSymbol);
 	
 	/**
-	 * for getRadius, perhaps try absolute value of % instead of using floormod? 
-	 * abstract classes do not have a method body, but rather has a semicolon
+	 * Return the cell states in the neighborhood of the cell with the givien index and specified radius.
+	 * The radius refers to the additional number of cells to the left/right of the given index.
+	 * @param idx the location in which the radius is centered around
+	 * @param radius the scope of coverage from the index to its left and right 
+	 * @param gen the generation in which the index is drawn from
+	 * @return the neighborhood
 	 */
 	public static boolean[] getNeighborhoodByRadius(int idx, int radius, Generation gen) {
 		int booleanSize = 1 + (radius * 2); 
