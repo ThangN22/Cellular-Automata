@@ -6,6 +6,11 @@ import java.util.StringJoiner;
  */
 public class ElementaryRule extends Rule {
 	
+	/**
+	 * Ctor uses the parent ctor to create a rule.
+	 * @param ruleNum
+	 * @throws RuleNumException
+	 */
 	protected ElementaryRule(int ruleNum) throws RuleNumException {
 		super(ruleNum);
 		
@@ -94,8 +99,10 @@ public class ElementaryRule extends Rule {
 	/**
 	 * Return a two-line representation of the elementary rule table. The first line shows the 8 possible neighborhoods separated by spaces;
 	 * The second shows the states of the center cells in the next generation. Align each state character on the second line with the center 
-	 * of the corresponding neighborhood.
+	 * of the corresponding neighborhood. All returns will be in the format of the symbol parameters 
 	 * 
+	 * @param falseSymbol
+	 * @param trueSymbol
 	 * @return String a rule table in String format
 	 */
 	@Override
