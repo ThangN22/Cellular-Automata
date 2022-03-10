@@ -1,5 +1,9 @@
 import java.util.StringJoiner;
-
+/**
+ * ElementaryRule represents any one of the 256 rules that govern the evolution of elementary CAs
+ * @author Thang Nguyen
+ *
+ */
 public class ElementaryRule extends Rule {
 	
 	protected ElementaryRule(int ruleNum) throws RuleNumException {
@@ -13,6 +17,9 @@ public class ElementaryRule extends Rule {
 		
 	}
 	
+	/**
+	 * evolve functions in the same way as it did in project one
+	 */
 	@Override
 	public boolean evolve(boolean[] neighborhood) {
 		boolean[] binaryArray1 = new boolean[8];
@@ -72,14 +79,29 @@ public class ElementaryRule extends Rule {
 		return false;
 	}
 	
+	/**
+	 * retrieve the neighborhood of the index in a Generation by using the helper method getNeighborhoodByRadius. 
+	 * 
+	 * @param int the index of the neighborhood's center 
+	 * @param gen the generation of the neighborhood
+	 * @return booleanArray a boolean array of the neighborhood 
+	 */
 	@Override
 	public boolean[] getNeighborhood(int idx, Generation gen) {
 		return super.getNeighborhoodByRadius(idx, 1, gen);
 	}
 	
+	/**
+	 * Return a two-line representation of the elementary rule table. The first line shows the 8 possible neighborhoods separated by spaces;
+	 * The second shows the states of the center cells in the next generation. Align each state character on the second line with the center 
+	 * of the corresponding neighborhood.
+	 * 
+	 * @return String a rule table in String format
+	 */
 	@Override
 	public String ruleTableString(char falseSymbol, char trueSymbol) {
 		
+		// Create a boolean array of the 8 possible neighborhood configurations.
 		boolean[] genStates = {true, true, true, true, true, false, true, false, true, true, false, false, false, true, true, false, true, false, false, false, true, false, false, false};
 		Generation gen = new Generation(genStates);
 		StringJoiner joiner = new StringJoiner(" ", "", "");
@@ -103,10 +125,10 @@ public class ElementaryRule extends Rule {
 		{
 			String comp = String.valueOf(binaryRuleNum.charAt(idx));
 			if (comp.equals(String.valueOf(0))) { // The following else and else if convert the String of the RuleNum in Binary Format to conform with the trueSymbol and falseSymbol
-				joiner2.add(String.valueOf(falseSymbol));
+				joiner2.add(String.valueOf(falseSymbol)); //conform to the format of falseSymbol
 			}
 			else if (comp.equals(String.valueOf(1))) {
-				joiner2.add(String.valueOf(trueSymbol));
+				joiner2.add(String.valueOf(trueSymbol)); //conform to the format of trueSymbol
 			}
 		}
 		String returnStub = joiner.toString() + System.lineSeparator() +joiner2.toString();
